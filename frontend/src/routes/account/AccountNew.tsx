@@ -1,5 +1,5 @@
 import AccountForm from '../../component/AccountForm';
-import { Account } from '../../types/Account';
+import Account from '../../types/Account';
 import accountService from '../../services/accountService';
 import { useNavigate } from 'react-router-dom';
 

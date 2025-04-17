@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import logo from '@/assets/logo.svg';
-import { useAuth } from '../../component/AuthProvider';
+import { useAuth } from '../../hooks/AuthProvider';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../../layouts/Layout';
 import Input from '../../component/Input';

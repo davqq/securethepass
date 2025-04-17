@@ -7,6 +7,7 @@ import edit from '@/assets/edit.svg';
 import accountService from '../../services/accountService';
 import Button from '../../component/Button';
 import Favorite from '../../component/Favorite';
+import CopyButton from '../../component/CopyButton';
 
 const AccountDetails = () => {
   const { accountId } = useParams();
@@ -108,6 +109,7 @@ const AccountDetails = () => {
                   ? account.Password
                   : '•'.repeat(account.Password.length)}
               </div>
+              <CopyButton text={account.Password} />
               <button
                 className="ml-2 h-fit min-w-fit self-center text-white"
                 onClick={() => {

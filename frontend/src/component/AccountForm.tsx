@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Input from './Input';
 import Button from './Button';
-import { Account } from '../types/Account';
+import Account from '../types/Account';
 import Reload from '../assets/reload.svg';
 import Password from './Password';
 import accountService from '../services/accountService';
@@ -97,13 +97,14 @@ const AccountForm: React.FC<AccountFormProps> = ({
         onChange={(e) => setPassword(e.target.value)}
         placeholder="Enter your password"
       >
-        <button
+        <Button
+          color="icon"
           type="button"
           onClick={generatePassword}
           className="rounded-full bg-gray-700 p-1 hover:bg-gray-600 active:bg-gray-500"
         >
           <img src={Reload} height={20} width={20} alt="generate password" />
-        </button>
+        </Button>
       </Password>
 
       {/* Notes */}

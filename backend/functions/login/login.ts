@@ -17,7 +17,7 @@ const login = async ({
   res: Response;
 }) => {
   try {
-    const result = await checkUser({ config, user });
+    const result: User | null = await checkUser({ config, user });
 
     if (!result) {
       throw new BadRequest("User Not found");
@@ -40,7 +40,13 @@ const login = async ({
       maxAge: 15 * 60 * 1000,
     });
 
-    handleSuccess({ success: "Login successful" }, 200, res);
+    const returnUser = {
+      Guid: result.Guid,
+      Username: result.Username,
+      Email: result.Email,
+    };
+
+    handleSuccess(returnUser, 200, res);
   } catch (err) {
     handleError(err, res);
   }

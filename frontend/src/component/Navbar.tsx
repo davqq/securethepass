@@ -10,7 +10,7 @@ const Navbar = ({ loading }: NavbarProps) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
 
-  const handleNew = (e: React.FormEvent<HTMLButtonElement>) => {
+  const handleNew = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     navigate('/accounts/new');
   };
@@ -18,10 +18,9 @@ const Navbar = ({ loading }: NavbarProps) => {
   return (
     <div className="gap-2 border-b border-gray-600 px-8 py-4">
       <form
-        id="search-form"
         role="search"
         className="relative flex w-full gap-2"
-        onSubmit={(e) => e.preventDefault()}
+        onSubmit={handleNew}
       >
         <Input
           id="q"
@@ -38,7 +37,7 @@ const Navbar = ({ loading }: NavbarProps) => {
             className={`h-4 w-4 bg-searchspinner ${loading ? 'animate-spin' : 'animate-none'}`}
           />
         </div>
-        <Button onClick={handleNew} color="blue" form="search-form">
+        <Button type="submit" color="blue">
           New
         </Button>
       </form>

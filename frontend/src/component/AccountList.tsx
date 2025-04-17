@@ -1,12 +1,23 @@
 import AccountListItem from './AccountListItem';
 import Account from '../types/Account';
 import AccountGroupLabel from './AccountGroupLabel';
+import { useNavigate, useParams } from 'react-router-dom';
 
 interface AccountListProps {
   groupedAccounts: { [key: string]: Account[] };
 }
 
 const AccountList = ({ groupedAccounts }: AccountListProps) => {
+  const navigate = useNavigate();
+  const { accountId } = useParams();
+
+  const handleClick = (account: Account) => {
+    navigate(`/accounts/${account.Guid}`, {
+      state: { accountId: account.Guid },
+      replace: true,
+    });
+  };
+
   if (!groupedAccounts || Object.entries(groupedAccounts).length === 0) {
     return <p className="text-white">No accounts yet</p>;
   }
@@ -18,7 +29,12 @@ const AccountList = ({ groupedAccounts }: AccountListProps) => {
           <AccountGroupLabel label={groupLabel} />
           <ul>
             {accounts.map((account) => (
-              <AccountListItem account={account} key={account.Guid} />
+              <AccountListItem
+                isActive={account.Guid === accountId}
+                account={account}
+                key={account.Guid}
+                onClick={handleClick}
+              />
             ))}
           </ul>
         </li>

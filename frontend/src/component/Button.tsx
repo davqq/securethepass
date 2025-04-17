@@ -1,16 +1,16 @@
 import { ReactNode } from 'react';
-import { twMerge } from 'tailwind-merge';
+import { ClassNameValue, twMerge } from 'tailwind-merge';
 
 interface Props {
-  color: 'blue' | 'red' | 'neutral';
+  color: 'blue' | 'red' | 'neutral' | 'icon';
   value?: string | undefined;
   id?: string | undefined;
   name?: string | undefined;
   onClick?: React.MouseEventHandler<HTMLButtonElement> | undefined;
   className?: string | undefined;
   type?: 'button' | 'reset' | 'submit' | undefined;
-  [key: string]: any;
   children: ReactNode;
+  [key: string]: any;
 }
 
 const Button: React.FC<Props> = ({
@@ -24,16 +24,29 @@ const Button: React.FC<Props> = ({
   children,
   props,
 }) => {
-  let baseClassName =
-    'py-2 px-4 flex justify-center rounded-md content-center shadow-sm text-sm text-center font-medium text-white ';
+  let baseClassName: ClassNameValue =
+    'py-2 px-4 flex justify-center rounded-md content-center shadow-sm text-sm text-center font-medium text-white';
 
   if (color === 'blue') {
-    baseClassName += 'bg-blue-500 hover:bg-blue-600 active:bg-blue-700';
+    baseClassName = twMerge(
+      baseClassName,
+      'bg-blue-500 hover:bg-blue-600 active:bg-blue-700'
+    );
   } else if (color === 'red') {
-    baseClassName += 'bg-red-500 hover:bg-red-600 active:bg-red-700';
+    baseClassName = twMerge(
+      baseClassName,
+      'bg-red-500 hover:bg-red-600 active:bg-red-700'
+    );
   } else if (color === 'neutral') {
-    baseClassName +=
-      'bg-neutral-500 hover:bg-neutral-600  active:bg-neutral-700';
+    baseClassName = twMerge(
+      baseClassName,
+      'bg-neutral-500 hover:bg-neutral-600 active:bg-neutral-700'
+    );
+  } else if (color === 'icon') {
+    baseClassName = twMerge(
+      baseClassName,
+      'px-2 rounded-full bg-transparent hover:bg-white/10 active:bg-white/20'
+    );
   }
 
   return (

@@ -1,3 +1,4 @@
+/// <reference types="vite/client" />
 /// <reference types="vite/types/importMeta.d.ts" />
 /// <reference types="react-scripts" />
 /// <reference types="vite-plugin-svgr/client" />
