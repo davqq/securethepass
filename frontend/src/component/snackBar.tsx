@@ -16,7 +16,7 @@ const SnackBar: React.FC<SnackBarProps> = ({ message, type }) => {
 
   const images = {
     success: check,
-    error: copy,
+    error: copy, // todo: add error image
     info: null,
   };
 
@@ -26,7 +26,7 @@ const SnackBar: React.FC<SnackBarProps> = ({ message, type }) => {
 
   return (
     <div
-      className={`fixed bottom-4 right-4 flex flex-row items-center rounded-md p-4 shadow-lg transition-opacity ease-in-out ${style}`}
+      className={`fixed bottom-4 right-1/2 flex translate-x-1/2 flex-row items-center rounded-md p-4 shadow-lg transition-opacity ease-in-out ${style}`}
     >
       {image && <img src={image} alt={type} className="mr-2 inline h-6 w-6" />}
       <p className="text-white">{message}</p>

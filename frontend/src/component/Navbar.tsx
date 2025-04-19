@@ -1,6 +1,7 @@
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import Button from './Button';
 import Input from './Input';
+import loadingIcon from '@/assets/reload.svg';
 
 interface NavbarProps {
   loading: boolean;
@@ -33,8 +34,10 @@ const Navbar = ({ loading }: NavbarProps) => {
           onChange={(e) => setSearchParams({ q: e.target.value })}
         />
         <div className="absolute left-2 top-1/2 -translate-y-1/2 transform">
-          <div
-            className={`h-4 w-4 bg-searchspinner ${loading ? 'animate-spin' : 'animate-none'}`}
+          <img
+            src={loadingIcon}
+            alt="search"
+            className={`h-4 w-4 ${loading ? 'animate-spin' : 'animate-none'}`}
           />
         </div>
         <Button type="submit" color="blue">

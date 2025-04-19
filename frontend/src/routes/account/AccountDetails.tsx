@@ -91,37 +91,44 @@ const AccountDetails = () => {
         {account?.Username && (
           <div className="overflow-auto border-b border-gray-600 p-2.5">
             <div className="text-sm text-headline">username</div>
-            <div className="text-white">{account.Username}</div>
+            <div className="flex flex-row items-center text-white">
+              <p>{account.Username}</p>
+              <CopyButton className="ml-2" text={account.Username} />
+            </div>
           </div>
         )}
         {account?.Email && (
           <div className="overflow-auto border-b border-gray-600 p-2.5">
             <div className="text-sm text-headline">email</div>
-            <div className="text-white">{account.Email}</div>
+            <div className="flex flex-row items-center text-white">
+              <p>{account.Email}</p>
+              <CopyButton className="ml-2" text={account.Email} />
+            </div>
           </div>
         )}
         {account?.Password && (
           <div className="overflow-auto p-2.5">
             <div className="text-sm text-headline">password</div>
-            <div className="flex w-full justify-between">
+            <div className="flex w-full items-center">
               <div className="overflow-x-auto text-white">
                 {showPassword
                   ? account.Password
                   : '•'.repeat(account.Password.length)}
               </div>
-              <CopyButton text={account.Password} />
-              <button
-                className="ml-2 h-fit min-w-fit self-center text-white"
+              <Button
+                color="icon"
+                className="ml-2"
                 onClick={() => {
                   setShowPassword(!showPassword);
                 }}
               >
                 <img
-                  className="h-5 w-5"
+                  className="h-4 w-4"
                   src={showPassword ? eyeClosed : eyeOpen}
                   alt="Logo"
                 />
-              </button>
+              </Button>
+              <CopyButton text={account.Password} />
             </div>
           </div>
         )}
