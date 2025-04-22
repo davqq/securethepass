@@ -1,4 +1,4 @@
-const formatUpdatedAt = (updatedAt: string) => {
+const formatUpdatedAt = (updatedAt: string): string => {
   const today = new Date();
   const updated = new Date(updatedAt);
 
@@ -7,28 +7,36 @@ const formatUpdatedAt = (updatedAt: string) => {
 
   if (updated.getFullYear() !== today.getFullYear()) {
     return updated.getFullYear().toString();
-  } else if (daysDiff === 1) {
-    return 'Today';
-  } else if (daysDiff <= 7) {
-    return `Past 7 days`;
-  } else {
-    const monthNames = [
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December',
-    ];
-    const monthIndex = updated.getMonth();
-    return monthNames[monthIndex];
   }
+
+  if (
+    updated.getDate() === today.getDate() &&
+    updated.getMonth() === today.getMonth() &&
+    updated.getFullYear() === today.getFullYear()
+  ) {
+    return 'Today';
+  }
+
+  if (daysDiff <= 7) {
+    return `Past 7 days`;
+  }
+
+  const monthNames = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
+  const monthIndex = updated.getMonth();
+  return monthNames[monthIndex];
 };
 
 export default formatUpdatedAt;

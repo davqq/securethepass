@@ -8,7 +8,7 @@ interface LayoutProps {
 }
 
 const Layout: React.FC<LayoutProps> = ({ children, className, ...props }) => {
-  const baseClassName = 'flex max-w-[1152px] w-full';
+  const baseClassName = 'flex max-w-[1500px] w-full';
 
   return (
     <main className="flex w-full justify-center bg-slate-900">

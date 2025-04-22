@@ -69,6 +69,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     window.location.href = '/login';
   };
 
+  if (!!user) {
+    checkTokenValidity(signout);
+  }
+
   return (
     <AuthContext.Provider value={{ user, loading, signin, signout }}>
       {!loading && children}

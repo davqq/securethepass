@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import logo from '@/assets/logo.svg';
+import Link from '../../component/Link';
 
 function RegisterPage() {
   const [email, setEmail] = useState('');
@@ -149,16 +150,9 @@ function RegisterPage() {
             </div>
           </form>
         </div>
-        <div className="text-center text-white">
-          <p className="text-sm text-gray-400">
-            Already have an account?{' '}
-            <a
-              href="/login"
-              className="font-medium text-blue-600 hover:text-blue-500"
-            >
-              Sign in
-            </a>
-          </p>
+        <div className="flex justify-center gap-2 text-center text-sm text-white">
+          <p className="text-gray-400">Already have an account?</p>
+          <Link href="/login">Sign in</Link>
         </div>
       </div>
     </div>

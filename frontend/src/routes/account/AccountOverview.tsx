@@ -7,6 +7,8 @@ import accountService from '../../services/accountService';
 import { Outlet, useMatch, useSearchParams } from 'react-router-dom';
 import formatUpdatedAt from '../../utils/formattedDate';
 import { useMediaQuery } from 'react-responsive';
+import PopUp from '../../component/PopUp';
+import { useAuth } from '../../hooks/AuthProvider';
 
 const AccountsOverview = () => {
   const [accounts, setAccounts] = useState<Account[]>([]);
@@ -18,6 +20,8 @@ const AccountsOverview = () => {
     end: false,
   });
   const isMobile = useMediaQuery({ maxWidth: 768 });
+
+  const { user } = useAuth();
 
   useEffect(() => {
     setLoading(true);
@@ -36,22 +40,65 @@ const AccountsOverview = () => {
       });
   }, [searchQuery]);
 
-  const groupedAccounts = accounts.reduce<{ [key: string]: Account[] }>(
-    (groups, account) => {
-      const groupLabel = formatUpdatedAt(account.UpdatedAt.toString());
-      if (!groups[groupLabel]) groups[groupLabel] = [];
-      groups[groupLabel].push(account);
-      return groups;
-    },
-    {}
+  const sortOrder = [
+    'Today',
+    'Past 7 days',
+    ...Array.from({ length: 12 }, (_, i) =>
+      new Date(0, i).toLocaleString('en', { month: 'long' })
+    ),
+  ];
+
+  const groupedAccounts = new Map<string, Account[]>();
+
+  accounts.forEach((account) => {
+    const groupLabel = formatUpdatedAt(account.UpdatedAt.toString());
+
+    if (!groupedAccounts.has(groupLabel)) {
+      groupedAccounts.set(groupLabel, []);
+    }
+
+    groupedAccounts.get(groupLabel)!.push(account);
+  });
+
+  // Sortierte Gruppen in ein normales Objekt umwandeln
+  const sortedGroups: { [key: string]: Account[] } = Object.fromEntries(
+    [...groupedAccounts.entries()].sort(([a], [b]) => {
+      const isYearA = /^\d{4}$/.test(a);
+      const isYearB = /^\d{4}$/.test(b);
+
+      if (isYearA && isYearB) return parseInt(b) - parseInt(a); // Neueste Jahre zuerst
+      if (isYearA) return 1; // Jahre nach den anderen Gruppen einordnen
+      if (isYearB) return -1;
+
+      return sortOrder.indexOf(a) - sortOrder.indexOf(b);
+    })
   );
 
   return (
     <Layout>
       {(!isDetailPage || !isMobile) && (
-        <div className="flex w-full flex-col border-r border-gray-700 md:max-w-sm">
+        <div className="grid w-full grid-rows-[auto,1fr,auto] border-r border-gray-700 md:max-w-sm">
           <Navbar loading={loading} />
-          <AccountList groupedAccounts={groupedAccounts} />
+          <div className="overflow-y-auto">
+            <AccountList groupedAccounts={sortedGroups} />
+          </div>
+          <PopUp
+            className="border-t border-gray-600 py-2"
+            name={user?.Username || ''}
+          >
+            <a
+              href="/settings"
+              className="w-full rounded p-2 text-left text-white hover:bg-white/10"
+            >
+              Einstellungen
+            </a>
+            <a
+              href="/logout"
+              className="w-full rounded p-2 text-left text-white hover:bg-white/10"
+            >
+              Sign Out
+            </a>
+          </PopUp>
         </div>
       )}
       {(isDetailPage || !isMobile) && (

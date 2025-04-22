@@ -1,6 +1,7 @@
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import Button from './Button';
 import Input from './Input';
+import loadingIcon from '@/assets/reload.svg';
 
 interface NavbarProps {
   loading: boolean;
@@ -10,7 +11,7 @@ const Navbar = ({ loading }: NavbarProps) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
 
-  const handleNew = (e: React.FormEvent<HTMLButtonElement>) => {
+  const handleNew = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     navigate('/accounts/new');
   };
@@ -18,10 +19,9 @@ const Navbar = ({ loading }: NavbarProps) => {
   return (
     <div className="gap-2 border-b border-gray-600 px-8 py-4">
       <form
-        id="search-form"
         role="search"
         className="relative flex w-full gap-2"
-        onSubmit={(e) => e.preventDefault()}
+        onSubmit={handleNew}
       >
         <Input
           id="q"
@@ -34,11 +34,13 @@ const Navbar = ({ loading }: NavbarProps) => {
           onChange={(e) => setSearchParams({ q: e.target.value })}
         />
         <div className="absolute left-2 top-1/2 -translate-y-1/2 transform">
-          <div
-            className={`h-4 w-4 bg-searchspinner ${loading ? 'animate-spin' : 'animate-none'}`}
+          <img
+            src={loadingIcon}
+            alt="search"
+            className={`h-4 w-4 ${loading ? 'animate-spin' : 'animate-none'}`}
           />
         </div>
-        <Button onClick={handleNew} color="blue" form="search-form">
+        <Button type="submit" color="blue">
           New
         </Button>
       </form>

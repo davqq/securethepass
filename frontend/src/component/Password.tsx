@@ -2,6 +2,7 @@ import { useState } from 'react';
 import eyeOpen from '../assets/eyeClose.svg';
 import eyeClosed from '../assets/eyeOpen.svg';
 import Input, { InputProps } from './Input';
+import Button from './Button';
 
 interface PasswordProps extends InputProps {}
 
@@ -34,11 +35,13 @@ const Password: React.FC<PasswordProps> = ({
         className={className}
         name={name}
         autoComplete={autoComplete}
-        placeholder="•••••••"
+        placeholder="Enter your password"
+        aria-label="Password"
         {...props}
       />
       <div className="absolute inset-y-0 right-0 flex items-center space-x-1 pr-2">
-        <button
+        <Button
+          color="icon"
           type="button"
           onClick={togglePasswordVisibilty}
           className="rounded-full bg-gray-700 p-1 hover:bg-gray-600 active:bg-gray-500"
@@ -49,7 +52,7 @@ const Password: React.FC<PasswordProps> = ({
             width={20}
             alt="see password"
           />
-        </button>
+        </Button>
         {children}
       </div>
     </div>

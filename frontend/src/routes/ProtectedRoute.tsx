@@ -1,9 +1,9 @@
-import { Navigate } from 'react-router-dom';
-import { useAuth } from '../component/AuthProvider';
+import { Navigate, Outlet } from 'react-router-dom';
+import { useAuth } from '../hooks/AuthProvider';
 
 const ProtectedRoute = () => {
   const { user } = useAuth();
 
-  return user ? <Navigate to="/accounts" /> : <Navigate to="/login" />;
+  return user ? <Outlet /> : <Navigate to="/login" />;
 };
 export default ProtectedRoute;
